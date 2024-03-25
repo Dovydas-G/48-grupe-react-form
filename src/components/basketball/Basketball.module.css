@@ -1,0 +1,27 @@
+.basketball {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    padding: 2rem;
+    border: 0.1rem solid #000;
+}
+
+.screen {
+    font-size: 8rem;
+}
+
+.controls {
+    display: flex;
+    gap: 4rem;
+}
+
+.team {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn {
+    padding: 0.3em;
+    font-size: 2rem;
+}

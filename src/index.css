@@ -1,0 +1,34 @@
+body,
+body * {
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 2rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+        sans-serif;
+}
+
+body > div {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.counter {
+    display: flex;
+    gap: 0.2rem;
+}
+.counter > button {
+    padding: 0.5rem 1.5rem;
+    font-size: 2rem;
+    line-height: 1em;
+}
+.counter > span {
+    padding: 0 1.5rem;
+    font-size: 1.6rem;
+    line-height: 3rem;
+}
