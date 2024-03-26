@@ -1,6 +1,6 @@
 export function formatBasketballNumber(number, minSize) {
     
-    const numLength = ('' + number).length
+    const numLength = ('' + number).length;
     
     const times = (numLength < minSize) ? minSize - numLength : 0;
     
@@ -10,11 +10,6 @@ export function formatBasketballNumber(number, minSize) {
         zero += '0';
     }
     
-    return  numLength < minSize ? zero + number : number;
-    
-    
-    
-   
-
+    return  zero + number;
     
 }

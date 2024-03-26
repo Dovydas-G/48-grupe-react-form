@@ -1,3 +1,4 @@
+
 import style from './List.module.css';
 import { VegyItem } from './VegyItem';
 
@@ -6,7 +7,7 @@ export function List() {
     
     const dataObj = [
         {
-            name: 'Bulves',
+            name: 'Bulvės',
             price: 1,
         },
         {
@@ -14,11 +15,11 @@ export function List() {
             price: 3,
         },
         {
-            name: 'Svogunai',
+            name: 'Svogūnai',
             price: 2,
         },
         {
-            name: 'Kopustai',
+            name: 'Kopūstai',
             price: 4,
         },
         {
@@ -33,10 +34,12 @@ export function List() {
 
 
     return (
+    <>
         <ul className={style.vegetables}>
             {/* {data.map((vegy, index) => <li key={index} className={style.vegy}>{vegy}</li>)} */}
-            {dataObj.map((vegy, index) => <VegyItem key={index} title={vegy.name} price={vegy.price} total={vegy.price}/>)}
+            {dataObj.map((vegy, index) => <VegyItem key={index} dataObj={vegy}  />)}
             
         </ul>
-    )
+    </>
+    );
 }

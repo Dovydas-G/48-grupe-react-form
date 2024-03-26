@@ -1,0 +1,16 @@
+.header {
+    grid-area: header;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    font-size: 1.4rem;
+    background-color: #eee;
+    border-bottom: 0.1rem solid #ccc;
+    box-shadow: 0 0.2rem 0.4rem #0003;
+}
+
+.header nav {
+    display: flex;
+    gap: 1rem;
+}
