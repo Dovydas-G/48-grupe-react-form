@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 
 export function VegyItem ({ dataObj }) {
-    const {name, price} = dataObj;
+    const {name, price, unit} = dataObj;
     const minVegetablesAmount = 0;
     const maxVegetablesAmount = 10;
     const [count, setCount] = useState(1);
@@ -43,11 +43,13 @@ export function VegyItem ({ dataObj }) {
         let str = '';
 
         for (let i = 0; i < dataToLowerCase.length; i++) {
+            const alphabetBeginning = 97;
+            const alphabetEnd = 122;
             const letterLt = alphabetObj[dataToLowerCase[i]];
             if (letterLt) {
                 str += letterLt;
             }else {
-                if (dataToLowerCase.charCodeAt(i) >= 97 && dataToLowerCase.charCodeAt(i) <= 122) {
+                if (dataToLowerCase.charCodeAt(i) >= alphabetBeginning && dataToLowerCase.charCodeAt(i) <= alphabetEnd) {
                     str += dataToLowerCase[i];
                 }
             } 
@@ -62,10 +64,10 @@ export function VegyItem ({ dataObj }) {
             <span className={style.vegyTitle}>{name} </span>
             <div className={style.controls}>
                 <button onClick={handleCountMinus} className={style.btn}>-</button>
-                <span className={style.count}>{count}Kg</span>
+                <span className={style.count}>{count}{unit}</span>
                 <button onClick={handleCountPlus} className={style.btn}>+</button>
             </div>
-            <span className={style.totalPrice}>Total: {(price * count).toFixed(2)}</span>
+            <span className={style.totalPrice}>Total: {(price * count).toFixed(2)}$</span>
             <Link to={hrefConstructor(name)}>Read more</Link>
         </li>
     )

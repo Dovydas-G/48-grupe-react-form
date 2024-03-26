@@ -1,38 +1,12 @@
 
 import style from './List.module.css';
 import { VegyItem } from './VegyItem';
+import { dataObj } from '../../data/data';
 
 
 export function List() {
     
-    const dataObj = [
-        {
-            name: 'Bulvės',
-            price: 1,
-        },
-        {
-            name: 'Morkos',
-            price: 3,
-        },
-        {
-            name: 'Svogūnai',
-            price: 2,
-        },
-        {
-            name: 'Kopūstai',
-            price: 4,
-        },
-        {
-            name: 'Pomidorai',
-            price: 3,
-        },
-        {
-            name: 'Agurkai',
-            price: 2,
-        },
-    ]
-
-
+    
     return (
     <>
         <ul className={style.vegetables}>
