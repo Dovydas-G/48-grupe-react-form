@@ -4,8 +4,8 @@ import style from './List.module.css';
 import { Link } from 'react-router-dom';
 
 
-export function VegyItem ({ dataObj }) {
-    const {name, price, unit} = dataObj;
+export function VegyItem ({ vegetablesObj }) {
+    const {name, price, unit} = vegetablesObj;
     const minVegetablesAmount = 0;
     const maxVegetablesAmount = 10;
     const [count, setCount] = useState(1);

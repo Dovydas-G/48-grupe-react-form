@@ -60,3 +60,16 @@ aside {
     font-size: 1.6rem;
     line-height: 3rem;
 }
+
+.page-title {
+    font-size: 3rem;
+}
+.page-description {
+    font-size: 1.4rem;
+}
+
+.error {
+    padding: 2rem;
+    border: 0.2rem dashed red;
+    border-radius: 0.4rem;
+}

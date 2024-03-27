@@ -10,6 +10,7 @@ export function Header() {
                 <Link to='/'>Home</Link>
                 <Link to='/basketball'>Basketball</Link>
                 <Link to='/vegetables'>Vegetables</Link>
+                <Link to='/students'>Students</Link>
             </nav>
         </header>
     );
