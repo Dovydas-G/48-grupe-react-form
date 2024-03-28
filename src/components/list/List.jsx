@@ -26,10 +26,9 @@ export function List( ) {
 
       const vegetablesObj = [];
      
-     
       for (const key in vegetablesData) {
         for (const item of vegetablesData[key])
-            vegetablesObj.push(item)
+            vegetablesObj.push(item);
       }
 
     

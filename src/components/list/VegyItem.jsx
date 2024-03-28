@@ -24,9 +24,7 @@ export function VegyItem ({ vegetablesObj }) {
 
     function hrefConstructor(data) {
 
-        const dataToStr = (typeof data === 'string') ? data : '' + data;
-
-        const dataToLowerCase = dataToStr.toLowerCase();
+        const dataToLowerCase = data.toLowerCase();
 
         const alphabetObj = {
                             ą: 'a',

@@ -5,30 +5,30 @@ import { PageNotFound } from './PageNotFound';
 
 
 
-
 export function PageVegetablesInner() {
     
     let vegetablesPageObj = null;
     const data = useParams();
     const dataParts = [];
 
-    const title = dataParts[0];
-    const price = dataParts[1];
-    const unit = dataParts[2];
-
+    
     for (const item of dataObj) {
         if (item.id === data.id) {
-           dataParts.push(item.name, item.price, item.unit);
-           vegetablesPageObj = item;
+            dataParts.push(item.name, item.price, item.unit);
+            vegetablesPageObj = item;
         }
     }
 
+    const title = dataParts[0];
+    const price = dataParts[1];
+    const unit = dataParts[2];
+    
     if (vegetablesPageObj === null) {
         return (
             <>
             { PageNotFound() }
             </>
-        )
+        );
     }
 
     return (
