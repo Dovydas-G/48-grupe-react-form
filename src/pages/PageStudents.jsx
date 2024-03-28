@@ -13,7 +13,7 @@ export  function PageStudents() {
     useEffect(() => {
       fetch(dataURL)
         .then(res => res.json())
-        .then(data => setStudentData(data))
+        .then(data => setStudentData(data.students))
         .catch(e => console.error(e))
     }, []);
    
@@ -23,7 +23,7 @@ export  function PageStudents() {
         <>
             <h1 className="page-title">Students</h1>
             <p className="page-description">Students attending this class:</p>
-            {studentData.length === 0 ? <StudentsNoData/> : <StudentList/>}
+            {studentData.length === 0 ? <StudentsNoData/> : <StudentList data ={studentData}/>}
         </>
     )
 }

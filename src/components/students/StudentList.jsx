@@ -1,13 +1,12 @@
+/* eslint-disable react/prop-types */
 import style from './Students.module.css';
 import { Student } from "./Student";
 
-export function StudentList() {
+export function StudentList({data}) {
     return (
         <ul className={style.studentList}>
-            <Student />
-            <Student />
-            <Student />
-            <Student />
+            {data.map((student, index) => <Student key={index} data={student}/>)}
         </ul>
+        
     );
 }

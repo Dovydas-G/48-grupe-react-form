@@ -1,0 +1,31 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 20rem;
+}
+
+.formRow {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+label {
+    font-size: 1.1rem;
+}
+.input {
+    padding: 0.2em 0.5em;
+    font-size: 1.3rem;
+    line-height: 1.2em;
+}
+.button {
+    padding: 0.2em 0.5em;
+    font-size: 1.3rem;
+}
+
+.error {
+    background-color: pink;
+    color: red;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.9rem;
+}

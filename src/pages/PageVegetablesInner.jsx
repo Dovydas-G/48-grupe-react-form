@@ -1,18 +1,33 @@
+/* eslint-disable react/prop-types */
 import { useParams } from 'react-router-dom';
-import { dataObj } from '../data/data';
+// import { dataObj } from '../data/data';
 import { PageNotFound } from './PageNotFound';
+import { useState, useEffect } from 'react';
 
 
 
 
-export function PageVegetablesInner() {
+export function PageVegetablesInner(  ) {
+
+
+    const dataURL = 'https://raw.githubusercontent.com/Dovydas-G/48-grupe-react-form/main/public/vegetablesShopData.json';
+    
+    const [vegetablesData, setVegetablesData] = useState([]);
+    
+    useEffect(() => {
+        fetch(dataURL)
+          .then(res => res.json())
+          .then(data => setVegetablesData(data.vegetablesShopData))
+          .catch(e => console.error(e))
+      }, []);
+
     
     let vegetablesPageObj = null;
     const data = useParams();
     const dataParts = [];
 
     
-    for (const item of dataObj) {
+    for (const item of vegetablesData) {
         if (item.id === data.id) {
             dataParts.push(item.name, item.price, item.unit);
             vegetablesPageObj = item;
