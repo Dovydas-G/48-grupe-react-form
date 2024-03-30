@@ -1,13 +1,19 @@
 import { useState } from 'react';
 import style from './Form.module.css';
+import { alphabetObj } from '../../data/data';
 
 export function RegisterForm() {
     const [username, setUsername] = useState('');
     const [usernameErr, setUsernameErr] = useState('');
 
     const [email, setEmail] = useState('');
+    const [emailErr, setEmailErr] = useState('');
+
     const [password, setPassword] = useState('');
+    const [passwordErr, setPasswordErr] = useState('');
+
     const [repeatPassword, setRepeatPassword] = useState('');
+    const [repeatPasswordErr, setRepeatPasswordErr] = useState('');
 
     function handleUsernameChange(e) {
         setUsername(e.target.value);
@@ -26,6 +32,35 @@ export function RegisterForm() {
     }
 
     function isValidUsername(text) {
+
+        
+        //a - z
+        const alphabetBeginning = 97;
+        const alphabetEnd = 122;
+
+        //A - Z
+        const alphabetUpperCaseBeginning = 65;
+        const alphabetUpperCaseEnd = 90;
+
+        let nameStr = '';
+        let invalidSymbols = '';
+
+        for (let i = 0; i < text.length; i++) {
+            const letterLt = alphabetObj[text[i]];
+            const symbolAtCharCode = text.charCodeAt(i);
+
+            if (symbolAtCharCode >= alphabetBeginning && symbolAtCharCode <= alphabetEnd) {
+                nameStr += text[i];
+            } else if (symbolAtCharCode >= alphabetUpperCaseBeginning && symbolAtCharCode <= alphabetUpperCaseEnd) {
+                nameStr += text[i];
+            } else if (letterLt) {
+                nameStr += text[i];
+            } else invalidSymbols += text[i];
+        }
+
+
+        console.log(nameStr, invalidSymbols)
+
         if (text.length < 1) {
             return 'Per trumpas';
         }
@@ -34,10 +69,115 @@ export function RegisterForm() {
             return 'Per ilgas';
         }
 
+        if (invalidSymbols.length > 0) {
+            return `Siu "${invalidSymbols}" simboliu negalima naudoti `
+        }
+
         return true;
     }
 
     function isValidEmail(text) {
+
+        const parts = text.split('@');
+
+        const recipientName = parts[0];
+        const domainNameParts = parts[1].split('.');
+        const domain = domainNameParts[domainNameParts.length -1];
+        const domainName = parts[1].slice(0, -(domain.length +1));
+        // console.log(domain, domainName)
+
+        const firstCharacter = recipientName[0];
+        const lastCharacter = recipientName[recipientName.length -1];
+        
+
+        //a - z
+        const alphabetBeginning = 97;
+        const alphabetEnd = 122;
+
+        //A - Z
+        const alphabetUpperCaseBeginning = 65;
+        const alphabetUpperCaseEnd = 90;
+
+        //!# $ % & '
+        const specialCharactersBeginning = 33;
+        const specialCharactersEnd = 39;
+
+        //* + - /.
+        const specialCharactersBeginning2 = 42;
+        const specialCharactersEnd2 = 47;
+
+        //=
+        const equal = 61;
+        //?
+        const questionMark = 63;
+        //_
+        const underscore = 95;
+        //"
+        const quotationMark = 34;
+        //,
+        const comma = 44;
+
+        let recipientNameStr = '';
+        let invalidCharacters = '';
+
+
+        for (let i = 0; i < recipientName.length; i++) {
+            const symbolAtCharCode = recipientName.charCodeAt(i);
+
+            if (symbolAtCharCode >= alphabetBeginning && symbolAtCharCode <= alphabetEnd) {
+                recipientNameStr += recipientName[i];
+            } else if (recipientName[i] >= '0' && recipientName[i] <= '9') {
+                recipientNameStr += recipientName[i];
+            } else if (symbolAtCharCode === equal || symbolAtCharCode === questionMark || symbolAtCharCode === underscore) {
+                if (firstCharacter !== recipientName[i] && recipientName[i] !== lastCharacter && recipientName[i] !== recipientName[i + 1]) {
+                    recipientNameStr += recipientName[i];
+                } else invalidCharacters += recipientName[i];
+            } else if (symbolAtCharCode >= alphabetUpperCaseBeginning && symbolAtCharCode <= alphabetUpperCaseEnd) {
+                recipientNameStr += recipientName[i];
+            } else if (symbolAtCharCode >= specialCharactersBeginning && symbolAtCharCode <= specialCharactersEnd && symbolAtCharCode !== quotationMark) {
+                if (firstCharacter !== recipientName[i] && recipientName[i] !== lastCharacter && recipientName[i] !== recipientName[i + 1]) {
+                    recipientNameStr += recipientName[i];
+                } else invalidCharacters += recipientName[i];
+            } else if (symbolAtCharCode >= specialCharactersBeginning2  && symbolAtCharCode <= specialCharactersEnd2 && symbolAtCharCode !== comma) {
+                if (firstCharacter !== recipientName[i] && recipientName[i] !== lastCharacter && recipientName[i] !== recipientName[i + 1]) {
+                    recipientNameStr += recipientName[i];
+                } else invalidCharacters += recipientName[i];
+            } else invalidCharacters += recipientName[i];
+
+        }
+
+        const minus = 45;
+        const dot = 46;
+
+        let domainNameStr = '';
+        let invalidCharacters2 = '';
+        let isIpAddress = '';
+
+        for (let i = 0; i < domainName.length; i++) {
+            const symbolAtCharCode = domainName.charCodeAt(i);
+
+            if (symbolAtCharCode >= alphabetBeginning && symbolAtCharCode <= alphabetEnd) {
+                domainNameStr += domainName[i];
+            } else if (domainName[i] >= '0' && domainName[i] <= '9') {
+                domainNameStr += domainName[i];
+                isIpAddress += domainName[i];
+            } else if (symbolAtCharCode >= alphabetUpperCaseBeginning && symbolAtCharCode <= alphabetUpperCaseEnd) {
+                domainNameStr += domainName[i];
+            } else if (symbolAtCharCode === minus || symbolAtCharCode === dot) {
+                if (firstCharacter !== domainName[i] && domainName[i] !== lastCharacter && domainName[i] !== domainName[i + 1]) {
+                    domainNameStr += domainName[i];
+                    if (symbolAtCharCode === dot) {
+                        isIpAddress += domainName[i];
+                    }
+                } else invalidCharacters2 += recipientName[i];
+            } else invalidCharacters2 += domainName[i];        
+        }
+
+
+        // console.log(recipientNameStr, invalidCharacters)
+        // console.log(domainNameStr, invalidCharacters2)
+        console.log(isIpAddress)
+
         if (text.length < 6) {
             return 'Per trumpas';
         }
@@ -46,12 +186,30 @@ export function RegisterForm() {
             return 'Per ilgas';
         }
 
+        if (recipientName.length !== recipientNameStr.length) {
+            return `"${invalidCharacters[0]}" Naudojamas netinkamoje "${recipientName}" vietoje`
+        }
+
+        if (domainName.length !== domainNameStr.length) {
+            return `"${invalidCharacters2[0]}" Naudojamas netinkamoje ${domainName} vietoje`
+        }
+
+        if (domain.length < 2) {
+            return `Per trumpas domenas: ${domain}`
+        }
+        if (domainName.length === isIpAddress.length) {
+            return `"${isIpAddress}" Grazus IP ;)`
+        }
+
+
         return true;
     }
 
+//! # $ % & ' * + - / = ? ^ _ ` { | .
+
     function isValidPassword(text) {
         if (text.length < 1) {
-            return false;
+            return 'Per trumpas';
         }
 
         return true;
@@ -61,6 +219,10 @@ export function RegisterForm() {
         e.preventDefault();
 
         const usernameErrorValue = isValidUsername(username);
+        const emailErrorValue = isValidEmail(email);
+        const passwordErrorValue = isValidPassword(password)
+        
+
         let isAllFormValid = true;
 
         if (usernameErrorValue !== true) {
@@ -70,19 +232,25 @@ export function RegisterForm() {
             setUsernameErr('');
         }
 
-        if (!isValidEmail(email)) {
+        if (emailErrorValue !== true) {
             isAllFormValid = false;
-            console.log('blogas email');
+           setEmailErr(emailErrorValue);
+        } else {
+            setEmailErr('');
         }
 
-        if (!isValidPassword(password)) {
+        if (passwordErrorValue !== true) {
             isAllFormValid = false;
-            console.log('blogas password');
+            setPasswordErr(passwordErrorValue);
+        } else {
+            setPasswordErr('');
         }
 
         if (password !== repeatPassword) {
             isAllFormValid = false;
-            console.log('blogas repeat password');
+            setRepeatPasswordErr('slaptazodziai nesutampa')
+        } else {
+            setRepeatPasswordErr('');
         }
 
         if (isAllFormValid) {
@@ -95,23 +263,23 @@ export function RegisterForm() {
             <div className={style.formRow}>
                 <label className={style.label} htmlFor="">Username</label>
                 <input value={username} onChange={handleUsernameChange} className={style.input} type="text" placeholder="Eg. John" />
-                {usernameErr.length === 0 ? null : <p className={style.error}>{usernameErr}</p>}
+                {/* {usernameErr.length === 0 ? null : <p className={style.error}>{usernameErr}</p>} */}
                 {usernameErr && <p className={style.error}>{usernameErr}</p>}
             </div>
             <div className={style.formRow}>
                 <label className={style.label} htmlFor="">Email</label>
                 <input value={email} onChange={handleEmailChange} className={style.input} type="email" placeholder="Eg. john@cena.com" />
-                <p className={style.error}>Error...</p>
+                {emailErr && <p className={style.error}>{emailErr}</p>}
             </div>
             <div className={style.formRow}>
                 <label className={style.label} htmlFor="">Password</label>
                 <input value={password} onChange={handlePasswordChange} className={style.input} type="password" placeholder="enter your password" />
-                <p className={style.error}>Error...</p>
+                {passwordErr && <p className={style.error}>{passwordErr}</p>}
             </div>
             <div className={style.formRow}>
                 <label className={style.label} htmlFor="">Repeat password</label>
                 <input value={repeatPassword} onChange={handleRepeatPasswordChange} className={style.input} type="password" placeholder="enter your password" />
-                <p className={style.error}>Error...</p>
+                {repeatPasswordErr && <p className={style.error}>{repeatPasswordErr}</p>}
             </div>
             <div className={style.formRow}>
                 <button className={style.button} type="submit">Register</button>
