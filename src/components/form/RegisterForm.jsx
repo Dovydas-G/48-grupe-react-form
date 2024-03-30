@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import style from './Form.module.css';
 import { alphabetObj } from '../../data/data';
+import { charObj } from '../../data/data';
 
 export function RegisterForm() {
     const [username, setUsername] = useState('');
@@ -33,14 +34,6 @@ export function RegisterForm() {
 
     function isValidUsername(text) {
 
-        
-        //a - z
-        const alphabetBeginning = 97;
-        const alphabetEnd = 122;
-
-        //A - Z
-        const alphabetUpperCaseBeginning = 65;
-        const alphabetUpperCaseEnd = 90;
 
         let nameStr = '';
         let invalidSymbols = '';
@@ -49,9 +42,9 @@ export function RegisterForm() {
             const letterLt = alphabetObj[text[i]];
             const symbolAtCharCode = text.charCodeAt(i);
 
-            if (symbolAtCharCode >= alphabetBeginning && symbolAtCharCode <= alphabetEnd) {
+            if (symbolAtCharCode >= charObj.alphabetBeginning && symbolAtCharCode <= charObj.alphabetEnd) {
                 nameStr += text[i];
-            } else if (symbolAtCharCode >= alphabetUpperCaseBeginning && symbolAtCharCode <= alphabetUpperCaseEnd) {
+            } else if (symbolAtCharCode >= charObj.alphabetUpperCaseBeginning && symbolAtCharCode <= charObj.alphabetUpperCaseEnd) {
                 nameStr += text[i];
             } else if (letterLt) {
                 nameStr += text[i];
@@ -84,70 +77,37 @@ export function RegisterForm() {
         const domainNameParts = parts[1].split('.');
         const domain = domainNameParts[domainNameParts.length -1];
         const domainName = parts[1].slice(0, -(domain.length +1));
-        // console.log(domain, domainName)
-
+     
         const firstCharacter = recipientName[0];
         const lastCharacter = recipientName[recipientName.length -1];
         
-
-        //a - z
-        const alphabetBeginning = 97;
-        const alphabetEnd = 122;
-
-        //A - Z
-        const alphabetUpperCaseBeginning = 65;
-        const alphabetUpperCaseEnd = 90;
-
-        //!# $ % & '
-        const specialCharactersBeginning = 33;
-        const specialCharactersEnd = 39;
-
-        //* + - /.
-        const specialCharactersBeginning2 = 42;
-        const specialCharactersEnd2 = 47;
-
-        //=
-        const equal = 61;
-        //?
-        const questionMark = 63;
-        //_
-        const underscore = 95;
-        //"
-        const quotationMark = 34;
-        //,
-        const comma = 44;
-
         let recipientNameStr = '';
         let invalidCharacters = '';
-
 
         for (let i = 0; i < recipientName.length; i++) {
             const symbolAtCharCode = recipientName.charCodeAt(i);
 
-            if (symbolAtCharCode >= alphabetBeginning && symbolAtCharCode <= alphabetEnd) {
+            if (symbolAtCharCode >= charObj.alphabetBeginning && symbolAtCharCode <= charObj.alphabetEnd) {
                 recipientNameStr += recipientName[i];
             } else if (recipientName[i] >= '0' && recipientName[i] <= '9') {
                 recipientNameStr += recipientName[i];
-            } else if (symbolAtCharCode === equal || symbolAtCharCode === questionMark || symbolAtCharCode === underscore) {
+            } else if (symbolAtCharCode === charObj.equal || symbolAtCharCode === charObj.questionMark || symbolAtCharCode === charObj.underscore) {
                 if (firstCharacter !== recipientName[i] && recipientName[i] !== lastCharacter && recipientName[i] !== recipientName[i + 1]) {
                     recipientNameStr += recipientName[i];
                 } else invalidCharacters += recipientName[i];
-            } else if (symbolAtCharCode >= alphabetUpperCaseBeginning && symbolAtCharCode <= alphabetUpperCaseEnd) {
+            } else if (symbolAtCharCode >= charObj.alphabetUpperCaseBeginning && symbolAtCharCode <= charObj.alphabetUpperCaseEnd) {
                 recipientNameStr += recipientName[i];
-            } else if (symbolAtCharCode >= specialCharactersBeginning && symbolAtCharCode <= specialCharactersEnd && symbolAtCharCode !== quotationMark) {
+            } else if (symbolAtCharCode >= charObj.specialCharactersBeginning && symbolAtCharCode <= charObj.specialCharactersEnd && symbolAtCharCode !== charObj.quotationMark) {
                 if (firstCharacter !== recipientName[i] && recipientName[i] !== lastCharacter && recipientName[i] !== recipientName[i + 1]) {
                     recipientNameStr += recipientName[i];
                 } else invalidCharacters += recipientName[i];
-            } else if (symbolAtCharCode >= specialCharactersBeginning2  && symbolAtCharCode <= specialCharactersEnd2 && symbolAtCharCode !== comma) {
+            } else if (symbolAtCharCode >= charObj.specialCharactersBeginning2  && symbolAtCharCode <= charObj.specialCharactersEnd2 && symbolAtCharCode !== charObj.comma) {
                 if (firstCharacter !== recipientName[i] && recipientName[i] !== lastCharacter && recipientName[i] !== recipientName[i + 1]) {
                     recipientNameStr += recipientName[i];
                 } else invalidCharacters += recipientName[i];
             } else invalidCharacters += recipientName[i];
 
         }
-
-        const minus = 45;
-        const dot = 46;
 
         let domainNameStr = '';
         let invalidCharacters2 = '';
@@ -156,27 +116,23 @@ export function RegisterForm() {
         for (let i = 0; i < domainName.length; i++) {
             const symbolAtCharCode = domainName.charCodeAt(i);
 
-            if (symbolAtCharCode >= alphabetBeginning && symbolAtCharCode <= alphabetEnd) {
+            if (symbolAtCharCode >= charObj.alphabetBeginning && symbolAtCharCode <= charObj.alphabetEnd) {
                 domainNameStr += domainName[i];
             } else if (domainName[i] >= '0' && domainName[i] <= '9') {
                 domainNameStr += domainName[i];
                 isIpAddress += domainName[i];
-            } else if (symbolAtCharCode >= alphabetUpperCaseBeginning && symbolAtCharCode <= alphabetUpperCaseEnd) {
+            } else if (symbolAtCharCode >= charObj.alphabetUpperCaseBeginning && symbolAtCharCode <= charObj.alphabetUpperCaseEnd) {
                 domainNameStr += domainName[i];
-            } else if (symbolAtCharCode === minus || symbolAtCharCode === dot) {
+            } else if (symbolAtCharCode === charObj.minus || symbolAtCharCode === charObj.dot) {
                 if (firstCharacter !== domainName[i] && domainName[i] !== lastCharacter && domainName[i] !== domainName[i + 1]) {
                     domainNameStr += domainName[i];
-                    if (symbolAtCharCode === dot) {
+                    if (symbolAtCharCode === charObj.dot) {
                         isIpAddress += domainName[i];
                     }
                 } else invalidCharacters2 += recipientName[i];
             } else invalidCharacters2 += domainName[i];        
         }
 
-
-        // console.log(recipientNameStr, invalidCharacters)
-        // console.log(domainNameStr, invalidCharacters2)
-        console.log(isIpAddress)
 
         if (text.length < 6) {
             return 'Per trumpas';
@@ -208,10 +164,60 @@ export function RegisterForm() {
 //! # $ % & ' * + - / = ? ^ _ ` { | .
 
     function isValidPassword(text) {
-        if (text.length < 1) {
+
+       
+       
+
+        let countLowerCaseLetters = 0;
+        let countUpperCaseLetters = 0;
+        let countNumbers = 0;
+
+
+        let passwordStr = '';
+        let invalidPasswordStr = '';
+
+
+        for (let i = 0; i < text.length; i++) {
+            const symbolAtCharCode = text.charCodeAt(i);
+
+            if (symbolAtCharCode >= charObj.alphabetBeginning && symbolAtCharCode <= charObj.alphabetEnd) {
+                passwordStr += text[i];
+                countLowerCaseLetters++
+            } else if (symbolAtCharCode >= charObj.alphabetUpperCaseBeginning && symbolAtCharCode <= charObj.alphabetUpperCaseEnd) {
+                passwordStr += text[i];
+                countUpperCaseLetters++
+            } else if (text[i] >= '0' && text[i] <= '9') {
+                passwordStr += text[i];
+                countNumbers++
+            } else invalidPasswordStr += text[i];
+        }
+       
+
+        if (text.length < 8) {
             return 'Per trumpas';
         }
 
+        if (text.length > 50) {
+            return 'Per ilgas';
+        }
+
+        if (invalidPasswordStr.length > 0) {
+            return `Siu "${invalidPasswordStr}" simboliu negalima naudoti `;
+        }
+
+        if (countLowerCaseLetters < 1) {
+            return 'turi buti bent viena mazoji raide';
+        }
+
+        if (countUpperCaseLetters < 1) {
+            return 'turi buti bent viena didzioji raide';
+        }
+
+        if (countNumbers < 1) {
+            return 'turi buti bent vienas skaicius';
+        }
+
+       
         return true;
     }
 
