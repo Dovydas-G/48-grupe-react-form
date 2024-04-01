@@ -34,11 +34,20 @@ export function RegisterForm() {
 
     function isValidUsername(text) {
 
+        if (text.length < 1) {
+            return 'Per trumpas';
+        }
+
+        if (text.length > 20) {
+            return 'Per ilgas';
+        }
 
         let nameStr = '';
         let invalidSymbols = '';
 
         for (let i = 0; i < text.length; i++) {
+            //a-z
+            //ąčęėįšųūž
             const letterLt = alphabetObj[text[i]];
             const symbolAtCharCode = text.charCodeAt(i);
 
@@ -51,17 +60,6 @@ export function RegisterForm() {
             } else invalidSymbols += text[i];
         }
 
-
-        console.log(nameStr, invalidSymbols)
-
-        if (text.length < 1) {
-            return 'Per trumpas';
-        }
-
-        if (text.length > 20) {
-            return 'Per ilgas';
-        }
-
         if (invalidSymbols.length > 0) {
             return `Siu "${invalidSymbols}" simboliu negalima naudoti `
         }
@@ -70,6 +68,14 @@ export function RegisterForm() {
     }
 
     function isValidEmail(text) {
+
+        if (text.length < 6) {
+            return 'Per trumpas';
+        }
+
+        if (text.length > 50) {
+            return 'Per ilgas';
+        }
 
         const parts = text.split('@');
 
@@ -85,6 +91,9 @@ export function RegisterForm() {
         let invalidCharacters = '';
 
         for (let i = 0; i < recipientName.length; i++) {
+            //a-z
+            //0-9
+            //!# $ % & '* + - /.=?_
             const symbolAtCharCode = recipientName.charCodeAt(i);
 
             if (symbolAtCharCode >= charObj.alphabetBeginning && symbolAtCharCode <= charObj.alphabetEnd) {
@@ -110,63 +119,62 @@ export function RegisterForm() {
         }
 
         let domainNameStr = '';
-        let invalidCharacters2 = '';
+        let invalidDomainCharacters = '';
         let isIpAddress = '';
 
         for (let i = 0; i < domainName.length; i++) {
+            //a-z
+            //0-9
+            //-.
             const symbolAtCharCode = domainName.charCodeAt(i);
 
             if (symbolAtCharCode >= charObj.alphabetBeginning && symbolAtCharCode <= charObj.alphabetEnd) {
                 domainNameStr += domainName[i];
+            } else if (symbolAtCharCode >= charObj.alphabetUpperCaseBeginning && symbolAtCharCode <= charObj.alphabetUpperCaseEnd) {
+                domainNameStr += domainName[i];
             } else if (domainName[i] >= '0' && domainName[i] <= '9') {
                 domainNameStr += domainName[i];
                 isIpAddress += domainName[i];
-            } else if (symbolAtCharCode >= charObj.alphabetUpperCaseBeginning && symbolAtCharCode <= charObj.alphabetUpperCaseEnd) {
-                domainNameStr += domainName[i];
             } else if (symbolAtCharCode === charObj.minus || symbolAtCharCode === charObj.dot) {
                 if (firstCharacter !== domainName[i] && domainName[i] !== lastCharacter && domainName[i] !== domainName[i + 1]) {
                     domainNameStr += domainName[i];
                     if (symbolAtCharCode === charObj.dot) {
                         isIpAddress += domainName[i];
                     }
-                } else invalidCharacters2 += recipientName[i];
-            } else invalidCharacters2 += domainName[i];        
+                } else invalidDomainCharacters += recipientName[i];
+            } else invalidDomainCharacters += domainName[i];        
         }
 
-
-        if (text.length < 6) {
-            return 'Per trumpas';
-        }
-
-        if (text.length > 50) {
-            return 'Per ilgas';
-        }
 
         if (recipientName.length !== recipientNameStr.length) {
             return `"${invalidCharacters[0]}" Naudojamas netinkamoje "${recipientName}" vietoje`
         }
 
         if (domainName.length !== domainNameStr.length) {
-            return `"${invalidCharacters2[0]}" Naudojamas netinkamoje ${domainName} vietoje`
+            return `"${invalidDomainCharacters[0]}" Naudojamas netinkamoje ${domainName} vietoje`
         }
 
         if (domain.length < 2) {
             return `Per trumpas domenas: ${domain}`
         }
         if (domainName.length === isIpAddress.length) {
-            return `"${isIpAddress}" Grazus IP ;)`
+            return `"${isIpAddress}" Netinkamas formatas`
         }
-
 
         return true;
     }
 
-//! # $ % & ' * + - / = ? ^ _ ` { | .
 
     function isValidPassword(text) {
 
-       
-       
+
+        if (text.length < 8) {
+            return 'Per trumpas';
+        }
+
+        if (text.length > 50) {
+            return 'Per ilgas';
+        }
 
         let countLowerCaseLetters = 0;
         let countUpperCaseLetters = 0;
@@ -178,6 +186,9 @@ export function RegisterForm() {
 
 
         for (let i = 0; i < text.length; i++) {
+            //a-z
+            //0-9
+            //!# $ % & '* + - /.=?_
             const symbolAtCharCode = text.charCodeAt(i);
 
             if (symbolAtCharCode >= charObj.alphabetBeginning && symbolAtCharCode <= charObj.alphabetEnd) {
@@ -186,21 +197,18 @@ export function RegisterForm() {
             } else if (symbolAtCharCode >= charObj.alphabetUpperCaseBeginning && symbolAtCharCode <= charObj.alphabetUpperCaseEnd) {
                 passwordStr += text[i];
                 countUpperCaseLetters++
+            } else if (symbolAtCharCode >= charObj.specialCharactersBeginning && symbolAtCharCode <= charObj.specialCharactersEnd && symbolAtCharCode !== charObj.quotationMark) {
+                passwordStr += text[i];
+            } else if (symbolAtCharCode >= charObj.specialCharactersBeginning2  && symbolAtCharCode <= charObj.specialCharactersEnd2 && symbolAtCharCode !== charObj.comma) {
+                passwordStr += text[i];
+            } else if (symbolAtCharCode === charObj.equal || symbolAtCharCode === charObj.questionMark || symbolAtCharCode === charObj.underscore) {
+                passwordStr += text[i];
             } else if (text[i] >= '0' && text[i] <= '9') {
                 passwordStr += text[i];
                 countNumbers++
             } else invalidPasswordStr += text[i];
         }
        
-
-        if (text.length < 8) {
-            return 'Per trumpas';
-        }
-
-        if (text.length > 50) {
-            return 'Per ilgas';
-        }
-
         if (invalidPasswordStr.length > 0) {
             return `Siu "${invalidPasswordStr}" simboliu negalima naudoti `;
         }
@@ -217,7 +225,6 @@ export function RegisterForm() {
             return 'turi buti bent vienas skaicius';
         }
 
-       
         return true;
     }
 
